@@ -3,7 +3,6 @@
 plans/
 data/
 models/
-checkpoints/
 modelcard.md
 data.zip
 # Byte-compiled / optimized / DLL files
