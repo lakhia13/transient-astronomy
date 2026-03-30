@@ -4,7 +4,7 @@ plans/
 data/
 models/
 checkpoints/
-datacard.md
+modelcard.md
 data.zip
 # Byte-compiled / optimized / DLL files
 __pycache__/
