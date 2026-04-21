@@ -35,6 +35,7 @@ from sklearn.metrics import (
     confusion_matrix,
     f1_score,
     precision_recall_curve,
+    precision_recall_fscore_support,
     roc_auc_score,
     roc_curve,
 )
@@ -120,12 +121,35 @@ def full_eval_mc(
     """
     preds = probs.argmax(axis=1)
     accuracy = float((preds == labels).mean())
-    cm = confusion_matrix(labels, preds)
+    cm = confusion_matrix(labels, preds, labels=list(range(len(class_names))))
     report = classification_report(
-        labels, preds, target_names=class_names, zero_division=0
+        labels,
+        preds,
+        labels=list(range(len(class_names))),
+        target_names=class_names,
+        zero_division=0,
     )
     macro_f1 = float(f1_score(labels, preds, average="macro", zero_division=0))
     weighted_f1 = float(f1_score(labels, preds, average="weighted", zero_division=0))
+
+    # Per-class precision / recall / F1 / support as a JSON-serializable dict.
+    # Using labels=range(C) guarantees an entry for every class even if some
+    # class has zero predictions (common for rare classes like 'asteroid').
+    p, r, f1, sup = precision_recall_fscore_support(
+        labels,
+        preds,
+        labels=list(range(len(class_names))),
+        zero_division=0,
+    )
+    per_class_metrics = {
+        class_names[i]: {
+            "precision": float(p[i]),
+            "recall": float(r[i]),
+            "f1": float(f1[i]),
+            "support": int(sup[i]),
+        }
+        for i in range(len(class_names))
+    }
 
     return {
         "accuracy": accuracy,
@@ -133,6 +157,7 @@ def full_eval_mc(
         "weighted_f1": weighted_f1,
         "confusion_matrix": cm,
         "classification_report": report,
+        "per_class_metrics": per_class_metrics,
         "n_samples": len(labels),
         "class_names": class_names,
     }

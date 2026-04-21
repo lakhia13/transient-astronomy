@@ -1,0 +1,22 @@
+experiment:
+  name: "resnet18_mc_nishant_v1"
+  seed: 42
+
+paths:
+  labels_csv: "data/labels.csv"
+  processed_dir: "data/processed"
+  checkpoint_root: "checkpoints/experiments"
+  results_root: "results/experiments"
+
+training:
+  model: "resnet18_mc"
+  loss: "weighted_ce"   # weighted_ce | focal_mc | weighted_focal_mc | ce
+  epochs: 30
+  batch_size: 64
+  num_workers: 4
+  lr: 0.001
+  weight_decay: 0.0001
+  patience: 8
+  scheduler: "cosine"
+  grad_clip: 1.0
+  use_weighted_sampler: true
