@@ -18,10 +18,17 @@ from __future__ import annotations
 
 import argparse
 import json
+import logging
 import random
 import sys
 from pathlib import Path
 from typing import Any
+
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(message)s",
+    handlers=[logging.StreamHandler(sys.stdout)],
+)
 
 import matplotlib
 matplotlib.use("Agg")  # non-interactive backend so PNGs save cleanly on headless GPUs
