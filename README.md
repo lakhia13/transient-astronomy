@@ -46,7 +46,9 @@ transient-astronomy/
 │   ├── 02_model_architecture.ipynb # Stage 6: model analysis, param counts, GPU profiling
 │   ├── 03_class_imbalance.ipynb    # Stage 7: focal loss, weighted sampler, class weights
 │   ├── 04_training.ipynb           # Stage 8: training loop walkthrough and full run
-│   └── 05_evaluation.ipynb         # Stage 9: AUC, ROC, PR, F1, confusion matrix, threshold
+│   ├── 05_evaluation.ipynb         # Stage 9: AUC, ROC, PR, F1, confusion matrix, threshold
+│   └── 06_demo.ipynb               # Demo for presentation for real vs bogus; AUC, ROC, PR, F1, confusion matrix
+
 │
 ├── checkpoints/                    # Saved model weights (.pt) and training histories (.json)
 ├── results/                        # Saved plots and evaluation JSON
